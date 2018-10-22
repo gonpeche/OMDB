@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
-import FilterableMovieContainer from './FilterableMovieContainer';
-import Movies from '../components/Movies'
-import Sidebar from '../containers/Sidebar'
+import SearchContainer from './SearchContainer'
 
 export default class Main extends Component {
   render() {
     return (
       <div>
-          <Sidebar />
-          <FilterableMovieContainer />
-          <Movies />
+        <SearchContainer />
       </div>
     )
   }
 }
+
 
