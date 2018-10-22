@@ -4,18 +4,19 @@
   "description": "movies info front end site",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack -w"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/atralice/omdb.git"
+    "url": "git+https://github.com/gonpeche/OMDB.git"
   },
   "author": "plataforma 5",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/atralice/omdb/issues"
+    "url": "https://github.com/gonpeche/OMDB.git"
   },
-  "homepage": "https://github.com/atralice/omdb#readme",
+  "homepage": "https://github.com/gonpeche/OMDB#readme",
   "dependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
