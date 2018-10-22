@@ -11,13 +11,14 @@
     "type": "git",
     "url": "git+https://github.com/gonpeche/OMDB.git"
   },
-  "author": "plataforma 5",
+  "author": "Gon Espeche",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/gonpeche/OMDB.git"
   },
   "homepage": "https://github.com/gonpeche/OMDB#readme",
   "dependencies": {
+    "bootstrap": "^4.1.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
