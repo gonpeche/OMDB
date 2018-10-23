@@ -10,6 +10,7 @@ export default class SearchContainer extends Component {
             search: [] 
         }
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleClick = this.handleClick.bind(this)
     }
 
     handleSubmit(event) {
@@ -24,11 +25,19 @@ export default class SearchContainer extends Component {
         })
     }
 
+    handleClick(event) {
+        console.log('hola')
+        console.log(event.target.value)
+    }
+
     render() {
         return (
             <div >
                 <FilterInput handleSubmit={this.handleSubmit} />
-                <Movies movies={this.state.search}/>
+                <Movies 
+                    movies={this.state.search}
+                    handleClick={this.handleClick}
+                />
             </div>
         )
     }

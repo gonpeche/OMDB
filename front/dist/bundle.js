@@ -3749,7 +3749,7 @@ _reactDom2.default.render(_react2.default.createElement(
     _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
         null,
-        _react2.default.createElement(_reactRouterDom.Route, { path: "/", component: _Main2.default })
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: _Main2.default })
     )
 ), document.getElementById("app"));
 
@@ -28734,6 +28734,8 @@ var _SearchContainer = __webpack_require__(108);
 
 var _SearchContainer2 = _interopRequireDefault(_SearchContainer);
 
+var _reactRouter = __webpack_require__(130);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28757,7 +28759,12 @@ var Main = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_SearchContainer2.default, null)
+        _react2.default.createElement(
+          _reactRouter.Switch,
+          null,
+          _react2.default.createElement(_reactRouter.Route, { path: '/', component: _SearchContainer2.default }),
+          ' />'
+        )
       );
     }
   }]);
@@ -28816,6 +28823,7 @@ var SearchContainer = function (_Component) {
             search: []
         };
         _this.handleSubmit = _this.handleSubmit.bind(_this);
+        _this.handleClick = _this.handleClick.bind(_this);
         return _this;
     }
 
@@ -28835,13 +28843,22 @@ var SearchContainer = function (_Component) {
             });
         }
     }, {
+        key: 'handleClick',
+        value: function handleClick(event) {
+            console.log('hola');
+            console.log(event.target.value);
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
                 'div',
                 null,
                 _react2.default.createElement(_FilterInput2.default, { handleSubmit: this.handleSubmit }),
-                _react2.default.createElement(_Movies2.default, { movies: this.state.search })
+                _react2.default.createElement(_Movies2.default, {
+                    movies: this.state.search,
+                    handleClick: this.handleClick
+                })
             );
         }
     }]);
@@ -28870,9 +28887,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = function (props) {
   return _react2.default.createElement(
-    'form',
-    { onSubmit: props.handleSubmit, style: { marginTop: '20px' } },
-    _react2.default.createElement('input', { type: 'text', name: 'movies', placeholder: 'Search Movie' })
+    "nav",
+    { className: "navbar navbar-light bg-light" },
+    _react2.default.createElement(
+      "form",
+      { onSubmit: props.handleSubmit, className: "form-inline" },
+      _react2.default.createElement(
+        "a",
+        { className: "navbar-brand" },
+        "Eleg\xED tu pel\xEDcula"
+      ),
+      _react2.default.createElement("input", { className: "form-control mr-sm-2", name: "movies", type: "text", placeholder: "Search Movies", "aria-label": "Search" }),
+      _react2.default.createElement(
+        "button",
+        { className: "btn btn-outline-success my-2 my-sm-0", type: "submit" },
+        "Search"
+      )
+    )
   );
 };
 
@@ -28891,51 +28922,46 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouter = __webpack_require__(130);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var card = {
-    width: "18rem"
+    width: "25%"
 };
 var img = {
     height: "18rem"
-
-    // var img = {
-    //     height: 
-    // }
-
 };
+
 exports.default = function (props) {
+    var handleClick = props.handleClick;
     return _react2.default.createElement(
-        "div",
-        { className: "container" },
+        'div',
+        { className: 'container' },
         _react2.default.createElement(
-            "div",
-            { className: "row" },
+            'div',
+            { className: 'row' },
             props.movies.length > 0 ? props.movies.map(function (movie) {
                 return _react2.default.createElement(
-                    "div",
-                    { key: movie.imdbID, className: "card", style: card },
-                    _react2.default.createElement("img", { style: img, className: "card-img-top", src: movie.Poster, alt: "Card image cap" }),
+                    'div',
+                    { key: movie.imdbID, className: 'card', style: card },
+                    _react2.default.createElement('img', { style: img, className: 'card-img-top', src: movie.Poster, alt: 'Card image cap' }),
                     _react2.default.createElement(
-                        "div",
-                        { className: "card-body" },
+                        'div',
+                        { className: 'card-body' },
                         _react2.default.createElement(
-                            "h5",
-                            { className: "card-title" },
+                            'h5',
+                            { className: 'card-title' },
                             movie.Title
                         ),
                         _react2.default.createElement(
-                            "a",
-                            { href: "#", className: "btn btn-primary" },
-                            "Go somewhere"
+                            'a',
+                            { href: '#', className: 'btn btn-primary', onClick: handleClick },
+                            'Go somewhere'
                         )
                     )
                 );
-            }) : _react2.default.createElement(
-                "h1",
-                null,
-                "Eleg\xED la pel\xEDcula"
-            )
+            }) : null
         )
     );
 };
@@ -29826,6 +29852,53 @@ module.exports = function spread(callback) {
     return callback.apply(null, arr);
   };
 };
+
+
+/***/ }),
+/* 130 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MemoryRouter__ = __webpack_require__(66);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "MemoryRouter", function() { return __WEBPACK_IMPORTED_MODULE_0__MemoryRouter__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Prompt__ = __webpack_require__(70);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Prompt", function() { return __WEBPACK_IMPORTED_MODULE_1__Prompt__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Redirect__ = __webpack_require__(72);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return __WEBPACK_IMPORTED_MODULE_2__Redirect__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__(24);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return __WEBPACK_IMPORTED_MODULE_3__Route__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Router__ = __webpack_require__(15);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return __WEBPACK_IMPORTED_MODULE_4__Router__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__StaticRouter__ = __webpack_require__(74);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "StaticRouter", function() { return __WEBPACK_IMPORTED_MODULE_5__StaticRouter__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Switch__ = __webpack_require__(76);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Switch", function() { return __WEBPACK_IMPORTED_MODULE_6__Switch__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__generatePath__ = __webpack_require__(26);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "generatePath", function() { return __WEBPACK_IMPORTED_MODULE_7__generatePath__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__matchPath__ = __webpack_require__(16);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "matchPath", function() { return __WEBPACK_IMPORTED_MODULE_8__matchPath__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__withRouter__ = __webpack_require__(80);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "withRouter", function() { return __WEBPACK_IMPORTED_MODULE_9__withRouter__["a"]; });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /***/ })
