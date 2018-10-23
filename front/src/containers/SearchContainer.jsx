@@ -7,7 +7,7 @@ export default class SearchContainer extends Component {
     constructor() {
         super()
         this.state = {
-            search: []
+            search: [] 
         }
         this.handleSubmit = this.handleSubmit.bind(this)
     }
