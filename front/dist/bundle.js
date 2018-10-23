@@ -28893,31 +28893,49 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var card = {
+    width: "18rem"
+};
+var img = {
+    height: "18rem"
+
+    // var img = {
+    //     height: 
+    // }
+
+};
 exports.default = function (props) {
     return _react2.default.createElement(
         "div",
-        null,
-        props.movies.length > 0 ? props.movies.map(function (movie) {
-            return _react2.default.createElement(
-                "div",
-                { key: movie.imdbID },
-                _react2.default.createElement("img", { src: movie.Poster, height: "150", width: "100" }),
-                _react2.default.createElement(
-                    "li",
-                    null,
-                    movie.Title
-                ),
-                _react2.default.createElement(
-                    "li",
-                    null,
-                    "A\xF1o: ",
-                    movie.Year
-                )
-            );
-        }) : _react2.default.createElement(
-            "h1",
-            null,
-            "Eleg\xED la pel\xEDcula"
+        { className: "container" },
+        _react2.default.createElement(
+            "div",
+            { className: "row" },
+            props.movies.length > 0 ? props.movies.map(function (movie) {
+                return _react2.default.createElement(
+                    "div",
+                    { key: movie.imdbID, className: "card", style: card },
+                    _react2.default.createElement("img", { style: img, className: "card-img-top", src: movie.Poster, alt: "Card image cap" }),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "card-body" },
+                        _react2.default.createElement(
+                            "h5",
+                            { className: "card-title" },
+                            movie.Title
+                        ),
+                        _react2.default.createElement(
+                            "a",
+                            { href: "#", className: "btn btn-primary" },
+                            "Go somewhere"
+                        )
+                    )
+                );
+            }) : _react2.default.createElement(
+                "h1",
+                null,
+                "Eleg\xED la pel\xEDcula"
+            )
         )
     );
 };

@@ -26,7 +26,7 @@ export default class SearchContainer extends Component {
 
     render() {
         return (
-            <div>
+            <div >
                 <FilterInput handleSubmit={this.handleSubmit} />
                 <Movies movies={this.state.search}/>
             </div>
