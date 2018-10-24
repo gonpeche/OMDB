@@ -28748,10 +28748,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
 var _FilterInput = __webpack_require__(109);
 
 var _FilterInput2 = _interopRequireDefault(_FilterInput);
@@ -28760,9 +28756,9 @@ var _Movies = __webpack_require__(110);
 
 var _Movies2 = _interopRequireDefault(_Movies);
 
-var _axios = __webpack_require__(111);
+var _react = __webpack_require__(1);
 
-var _axios2 = _interopRequireDefault(_axios);
+var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(81);
 
@@ -28801,7 +28797,7 @@ var SearchContainer = function (_Component) {
             movieID: ""
         };
         _this.handleSubmit = _this.handleSubmit.bind(_this);
-        _this.handleClick = _this.handleClick.bind(_this);
+        // this.handleClick = this.handleClick.bind(this)
         return _this;
     }
 
@@ -28812,14 +28808,13 @@ var SearchContainer = function (_Component) {
             var movie = event.target.movies.value;
             this.props.fetchMovies(movie);
         }
-    }, {
-        key: 'handleClick',
-        value: function handleClick(event, movie) {
-            // REDUXARLO TAMBIEN
-            this.setState({
-                movieID: event.target.id
-            });
-        }
+
+        // handleClick(event, movie) { // REDUXARLO TAMBIEN
+        //     this.setState({
+        //         movieID: event.target.id
+        //     })
+        // }
+
     }, {
         key: 'render',
         value: function render() {
@@ -28910,15 +28905,13 @@ exports.default = function (_ref) {
     var movies = _ref.movies,
         handleClick = _ref.handleClick;
 
-    // let handleClick = movies.handleClick
     return _react2.default.createElement(
         'div',
         { className: 'container' },
         _react2.default.createElement(
             'div',
             { className: 'row' },
-            movies.length > 0 ? movies.map(function (movie) {
-                console.log(movies);
+            movies.movies.length > 0 ? movies.movies.map(function (movie) {
                 return _react2.default.createElement(
                     'div',
                     { key: movie.imdbID, className: 'card', style: card },
@@ -28941,16 +28934,12 @@ exports.default = function (_ref) {
                                     onClick: function onClick(e) {
                                         return handleClick(e, movie);
                                     } },
-                                ' Go somewhere'
+                                ' Details'
                             )
                         )
                     )
                 );
-            }) : _react2.default.createElement(
-                'p',
-                null,
-                'EMPTY'
-            )
+            }) : null
         )
     );
 };
@@ -29952,7 +29941,6 @@ var Movie = function (_Component) {
         value: function render() {
             var selectedMovie = this.state.selectedMovie;
 
-            console.log(selectedMovie);
             var card = { width: "50%", height: "1rem", marginLeft: "25%" };
             var span = { fontWeight: "bold" };
             return _react2.default.createElement(
@@ -30089,7 +30077,7 @@ exports.default = (0, _redux.createStore)(_index2.default, composeEnhancers((0, 
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _redux = __webpack_require__(30);
@@ -30100,10 +30088,9 @@ var _moviesReducer2 = _interopRequireDefault(_moviesReducer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// export default combineReducers({ 
-//     movies: moviesReducer
-// });
-exports.default = _moviesReducer2.default;
+exports.default = (0, _redux.combineReducers)({
+    movies: _moviesReducer2.default
+});
 
 /***/ }),
 /* 134 */

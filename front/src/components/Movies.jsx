@@ -9,14 +9,12 @@ var img = {
 }
 
 export default ({movies, handleClick}) => {
-    // let handleClick = movies.handleClick
     return (
         <div className="container">
             <div className="row">
                 {
-                    movies.length > 0
-                    ?  movies.map(movie => {
-                        console.log(movies)
+                    movies.movies.length > 0
+                    ?  movies.movies.map(movie => {
                         return (
 
                             <div key={movie.imdbID} className="card" style={card}>
@@ -27,7 +25,7 @@ export default ({movies, handleClick}) => {
                                         <Link to={`/movie/${movie.imdbID}`}>
                                             <button className="btn btn-primary" 
                                             id={movie.imdbID} 
-                                            onClick={(e) => handleClick(e,movie)}> Go somewhere 
+                                            onClick={(e) => handleClick(e,movie)}> Details 
                                             </button>
                                         </Link>
                                 </div>
@@ -35,7 +33,7 @@ export default ({movies, handleClick}) => {
 
                         )
                     })
-                    : <p>EMPTY</p>
+                    : null
                 }
             </div>
         </div>

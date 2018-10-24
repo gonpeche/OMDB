@@ -1,11 +1,9 @@
-import React, { Component } from 'react'
 import FilterInput from '../components/FilterInput'
 import Movies from '../components/Movies'
-import axios from 'axios'
 
+import React, { Component } from 'react'
 import { connect } from "react-redux";
 import { fetchMovies } from "../actions/index";
-
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -25,7 +23,7 @@ class SearchContainer extends Component {
             movieID: ""
         }
         this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleClick = this.handleClick.bind(this)
+        // this.handleClick = this.handleClick.bind(this)
     }
     
     handleSubmit(event) {
@@ -34,12 +32,11 @@ class SearchContainer extends Component {
         this.props.fetchMovies(movie)        
     }
     
-    
-    handleClick(event, movie) { // REDUXARLO TAMBIEN
-        this.setState({
-            movieID: event.target.id
-        })
-    }
+    // handleClick(event, movie) { // REDUXARLO TAMBIEN
+    //     this.setState({
+    //         movieID: event.target.id
+    //     })
+    // }
 
     render() {
         return (

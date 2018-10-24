@@ -21,7 +21,6 @@ export default class Movie extends Component {
 
     render() {
         const { selectedMovie } = this.state
-        console.log(selectedMovie)
         var card = {width: "50%", height: "1rem", marginLeft: "25%"}
         var span = {fontWeight: "bold"}
         return (
