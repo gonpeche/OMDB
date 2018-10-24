@@ -28884,15 +28884,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // import React from 'react'
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-
-var card = {
-    width: "25%"
-};
-var img = {
-    height: "18rem"
-};
+var card = { width: "25%" };
+var img = { height: "18rem" };
 
 var Movies = function (_Component) {
     _inherits(Movies, _Component);
@@ -28900,12 +28895,22 @@ var Movies = function (_Component) {
     function Movies(props) {
         _classCallCheck(this, Movies);
 
-        return _possibleConstructorReturn(this, (Movies.__proto__ || Object.getPrototypeOf(Movies)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Movies.__proto__ || Object.getPrototypeOf(Movies)).call(this, props));
+
+        _this.handleClick = _this.handleClick.bind(_this);
+        return _this;
     }
 
     _createClass(Movies, [{
+        key: 'handleClick',
+        value: function handleClick(e, movie) {
+            console.log(movie);
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             var movies = this.props.movies;
 
             return _react2.default.createElement(
@@ -28924,7 +28929,9 @@ var Movies = function (_Component) {
                                 null,
                                 _react2.default.createElement(
                                     'a',
-                                    { href: '#', className: 'badge badge-warning' },
+                                    { onClick: function onClick(e) {
+                                            return _this2.handleClick(e, movie);
+                                        }, href: '#', className: 'badge badge-warning' },
                                     'Marcar como favorito'
                                 )
                             ),
@@ -28955,40 +28962,6 @@ var Movies = function (_Component) {
 
     return Movies;
 }(_react.Component);
-
-// export default ({movies, handleClick}) => {
-//     return (
-//         <div className="container">
-//             <div className="row">
-//                 {
-//                     movies.movies.length > 0
-//                     ?  movies.movies.map(movie => {
-//                         return (
-
-//                             <div key={movie.imdbID} className="card" style={card}>
-//                                 <img style={img} className="card-img-top" src={movie.Poster}  alt="Card image cap"></img>
-//                                 <span><a href="#" class="badge badge-warning">Marcar como favorito</a></span>
-//                                 <div className="card-body">
-//                                     <h5 className="card-title">{movie.Title}</h5>
-
-//                                         <Link to={`/movie/${movie.imdbID}`}>
-//                                             <button className="btn btn-primary" 
-//                                             id={movie.imdbID} 
-//                                             onClick={(e) => handleClick(e,movie)}> Details 
-//                                             </button>
-//                                         </Link>
-//                                         </div>
-//                             </div>
-
-//                         )
-//                     })
-//                     : null
-//                 }
-//             </div>
-//         </div>
-//         )
-// }
-
 
 exports.default = Movies;
 
