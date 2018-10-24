@@ -9,7 +9,7 @@ import Main from './containers/Main';
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
-            <Route exact path="/" component={Main} />
+            <Route path="/" component={Main} />
         </BrowserRouter>    
     </Provider>
 ,document.getElementById("app"))

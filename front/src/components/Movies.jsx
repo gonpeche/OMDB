@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 
 var card = {
     width: "25%"
@@ -21,7 +21,9 @@ export default (props) => {
                                 <img style={img} className="card-img-top" src={movie.Poster}  alt="Card image cap"></img>
                                 <div className="card-body">
                                     <h5 className="card-title">{movie.Title}</h5>
-                                        <a href="#" className="btn btn-primary" onClick={handleClick}>Go somewhere</a>
+                                        <Link to={`/movie/${movie.imdbID}`}>
+                                            <button className="btn btn-primary" id={movie.imdbID} onClick={handleClick}> Go somewhere </button>
+                                        </Link>
                                 </div>
                             </div>
                         )

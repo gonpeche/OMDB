@@ -3749,7 +3749,7 @@ _reactDom2.default.render(_react2.default.createElement(
     _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
         null,
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: _Main2.default })
+        _react2.default.createElement(_reactRouterDom.Route, { path: "/", component: _Main2.default })
     )
 ), document.getElementById("app"));
 
@@ -28736,6 +28736,10 @@ var _SearchContainer2 = _interopRequireDefault(_SearchContainer);
 
 var _reactRouter = __webpack_require__(130);
 
+var _Movie = __webpack_require__(131);
+
+var _Movie2 = _interopRequireDefault(_Movie);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28747,22 +28751,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Main = function (_Component) {
   _inherits(Main, _Component);
 
-  function Main() {
+  function Main(props) {
     _classCallCheck(this, Main);
 
-    return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
   }
 
   _createClass(Main, [{
     key: 'render',
     value: function render() {
+      console.log(this.state);
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
           _reactRouter.Switch,
           null,
-          _react2.default.createElement(_reactRouter.Route, { path: '/', component: _SearchContainer2.default }),
+          _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/', component: _SearchContainer2.default }),
+          ' />',
+          _react2.default.createElement(_reactRouter.Route, { path: '/movie/:id', component: _Movie2.default }),
           ' />'
         )
       );
@@ -28820,7 +28827,8 @@ var SearchContainer = function (_Component) {
         var _this = _possibleConstructorReturn(this, (SearchContainer.__proto__ || Object.getPrototypeOf(SearchContainer)).call(this));
 
         _this.state = {
-            search: []
+            search: [],
+            movieID: ""
         };
         _this.handleSubmit = _this.handleSubmit.bind(_this);
         _this.handleClick = _this.handleClick.bind(_this);
@@ -28845,8 +28853,9 @@ var SearchContainer = function (_Component) {
     }, {
         key: 'handleClick',
         value: function handleClick(event) {
-            console.log('hola');
-            console.log(event.target.value);
+            this.setState({
+                movieID: event.target.id
+            });
         }
     }, {
         key: 'render',
@@ -28857,7 +28866,8 @@ var SearchContainer = function (_Component) {
                 _react2.default.createElement(_FilterInput2.default, { handleSubmit: this.handleSubmit }),
                 _react2.default.createElement(_Movies2.default, {
                     movies: this.state.search,
-                    handleClick: this.handleClick
+                    handleClick: this.handleClick,
+                    movieID: this.state.movieID
                 })
             );
         }
@@ -28922,7 +28932,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouter = __webpack_require__(130);
+var _reactRouterDom = __webpack_require__(55);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28955,9 +28965,13 @@ exports.default = function (props) {
                             movie.Title
                         ),
                         _react2.default.createElement(
-                            'a',
-                            { href: '#', className: 'btn btn-primary', onClick: handleClick },
-                            'Go somewhere'
+                            _reactRouterDom.Link,
+                            { to: '/movie/' + movie.imdbID },
+                            _react2.default.createElement(
+                                'button',
+                                { className: 'btn btn-primary', id: movie.imdbID, onClick: handleClick },
+                                ' Go somewhere '
+                            )
                         )
                     )
                 );
@@ -29900,6 +29914,81 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+/***/ }),
+/* 131 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _axios = __webpack_require__(111);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Movie = function (_Component) {
+    _inherits(Movie, _Component);
+
+    function Movie(props) {
+        _classCallCheck(this, Movie);
+
+        var _this = _possibleConstructorReturn(this, (Movie.__proto__ || Object.getPrototypeOf(Movie)).call(this, props));
+
+        _this.state = {
+            movieId: _this.props.match.params.id,
+            selectedMovie: {}
+        };
+        return _this;
+    }
+
+    _createClass(Movie, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            _axios2.default.get('https://www.omdbapi.com/?apikey=20dac387&i=' + this.state.movieId).then(function (res) {
+                return res.data;
+            }).then(function (movie) {
+                return _this2.setState({
+                    selectedMovie: movie
+                });
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var selectedMovie = this.state.selectedMovie;
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                console.log(selectedMovie)
+            );
+        }
+    }]);
+
+    return Movie;
+}(_react.Component);
+
+exports.default = Movie;
 
 /***/ })
 /******/ ]);

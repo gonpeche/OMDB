@@ -7,7 +7,8 @@ export default class SearchContainer extends Component {
     constructor() {
         super()
         this.state = {
-            search: [] 
+            search: [],
+            movieID: ""
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleClick = this.handleClick.bind(this)
@@ -26,8 +27,9 @@ export default class SearchContainer extends Component {
     }
 
     handleClick(event) {
-        console.log('hola')
-        console.log(event.target.value)
+        this.setState({
+            movieID: event.target.id
+        })
     }
 
     render() {
@@ -37,6 +39,7 @@ export default class SearchContainer extends Component {
                 <Movies 
                     movies={this.state.search}
                     handleClick={this.handleClick}
+                    movieID={this.state.movieID}
                 />
             </div>
         )
