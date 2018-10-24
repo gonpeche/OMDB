@@ -11,7 +11,10 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    return { movies: state.movies }; // si o si lo q esta en movieReducer
+    return { 
+        movies: state.movies,
+        favourites: state.favourites
+    }; // si o si lo q esta en movieReducer
 };
   
 class SearchContainer extends Component {
@@ -29,7 +32,7 @@ class SearchContainer extends Component {
     render() {
         return (
             <div>
-                <FilterInput handleSubmit={this.handleSubmit} />
+                <FilterInput handleSubmit={this.handleSubmit}/>
                 <Movies movies={this.props.movies} handleClick={this.handleClick}/>
             </div>
         )

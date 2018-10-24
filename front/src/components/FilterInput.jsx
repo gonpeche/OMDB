@@ -1,6 +1,5 @@
 import React from 'react';
-
-
+import {Link} from 'react-router-dom'
 
 export default (props) => {
     return (
@@ -13,7 +12,11 @@ export default (props) => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item active">
-              <a className="nav-link" href="#">Favoritos <span className="sr-only">(current)</span></a>
+
+            <Link to={`/favourites`}>
+               <button className="btn btn-primary" type="button">Favoritos </button>
+             </Link>
+
             </li>
           </ul>
           <form onSubmit={props.handleSubmit} className="form-inline my-2 my-lg-0">

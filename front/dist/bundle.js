@@ -28695,6 +28695,10 @@ var _Movie = __webpack_require__(131);
 
 var _Movie2 = _interopRequireDefault(_Movie);
 
+var _Favourites = __webpack_require__(138);
+
+var _Favourites2 = _interopRequireDefault(_Favourites);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28724,6 +28728,8 @@ var Main = function (_Component) {
           _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/', component: _SearchContainer2.default }),
           ' />',
           _react2.default.createElement(_reactRouter.Route, { path: '/movie/:id', component: _Movie2.default }),
+          ' />',
+          _react2.default.createElement(_reactRouter.Route, { path: '/favourites', component: _Favourites2.default }),
           ' />'
         )
       );
@@ -28781,7 +28787,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
-    return { movies: state.movies }; // si o si lo q esta en movieReducer
+    return {
+        movies: state.movies,
+        favourites: state.favourites
+    }; // si o si lo q esta en movieReducer
 };
 
 var SearchContainer = function (_Component) {
@@ -28835,51 +28844,52 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(55);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (props) {
   return _react2.default.createElement(
-    "nav",
-    { className: "navbar navbar-expand-lg navbar-light bg-light" },
+    'nav',
+    { className: 'navbar navbar-expand-lg navbar-light bg-light' },
     _react2.default.createElement(
-      "a",
-      { className: "navbar-brand", href: "#" },
-      "Home"
+      'a',
+      { className: 'navbar-brand', href: '#' },
+      'Home'
     ),
     _react2.default.createElement(
-      "button",
-      { className: "navbar-toggler", type: "button", "data-toggle": "collapse", "data-target": "#navbarSupportedContent", "aria-controls": "navbarSupportedContent", "aria-expanded": "false", "aria-label": "Toggle navigation" },
-      _react2.default.createElement("span", { className: "navbar-toggler-icon" })
+      'button',
+      { className: 'navbar-toggler', type: 'button', 'data-toggle': 'collapse', 'data-target': '#navbarSupportedContent', 'aria-controls': 'navbarSupportedContent', 'aria-expanded': 'false', 'aria-label': 'Toggle navigation' },
+      _react2.default.createElement('span', { className: 'navbar-toggler-icon' })
     ),
     _react2.default.createElement(
-      "div",
-      { className: "collapse navbar-collapse", id: "navbarSupportedContent" },
+      'div',
+      { className: 'collapse navbar-collapse', id: 'navbarSupportedContent' },
       _react2.default.createElement(
-        "ul",
-        { className: "navbar-nav mr-auto" },
+        'ul',
+        { className: 'navbar-nav mr-auto' },
         _react2.default.createElement(
-          "li",
-          { className: "nav-item active" },
+          'li',
+          { className: 'nav-item active' },
           _react2.default.createElement(
-            "a",
-            { className: "nav-link", href: "#" },
-            "Favoritos ",
+            _reactRouterDom.Link,
+            { to: '/favourites' },
             _react2.default.createElement(
-              "span",
-              { className: "sr-only" },
-              "(current)"
+              'button',
+              { className: 'btn btn-primary', type: 'button' },
+              'Favoritos '
             )
           )
         )
       ),
       _react2.default.createElement(
-        "form",
-        { onSubmit: props.handleSubmit, className: "form-inline my-2 my-lg-0" },
-        _react2.default.createElement("input", { className: "form-control mr-sm-2", name: "movies", type: "search", placeholder: "Search Movie", "aria-label": "Search" }),
+        'form',
+        { onSubmit: props.handleSubmit, className: 'form-inline my-2 my-lg-0' },
+        _react2.default.createElement('input', { className: 'form-control mr-sm-2', name: 'movies', type: 'search', placeholder: 'Search Movie', 'aria-label': 'Search' }),
         _react2.default.createElement(
-          "button",
-          { className: "btn btn-outline-success my-2 my-sm-0", type: "submit" },
-          "Search"
+          'button',
+          { className: 'btn btn-outline-success my-2 my-sm-0', type: 'submit' },
+          'Search'
         )
       )
     )
@@ -30291,6 +30301,131 @@ var thunk = createThunkMiddleware();
 thunk.withExtraArgument = createThunkMiddleware;
 
 /* harmony default export */ __webpack_exports__["default"] = (thunk);
+
+/***/ }),
+/* 138 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(55);
+
+var _reactRedux = __webpack_require__(81);
+
+var _index = __webpack_require__(136);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var card = { width: "22%", margin: "1%" };
+var img = { height: "18rem"
+
+    // const mapDispatchToProps = dispatch => {
+    //     return {
+    //         setFavourite: favouriteMovie => dispatch(setFavourite(favouriteMovie))
+    //     };
+    // };
+
+};var mapStateToProps = function mapStateToProps(state, ownProps) {
+    return { favourites: state.movies }; // Por que MOVIES y no FAVOURITES?
+};
+
+var Favourites = function (_Component) {
+    _inherits(Favourites, _Component);
+
+    function Favourites(props) {
+        _classCallCheck(this, Favourites);
+
+        var _this = _possibleConstructorReturn(this, (Favourites.__proto__ || Object.getPrototypeOf(Favourites)).call(this, props));
+
+        _this.handleClick = _this.handleClick.bind(_this);
+        return _this;
+    }
+
+    _createClass(Favourites, [{
+        key: 'handleClick',
+        value: function handleClick(e, movie) {
+            this.props.setFavourite(movie);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var favourites = this.props.favourites;
+            // console.log(this.props.favourites)
+
+            console.log(favourites);
+            return _react2.default.createElement(
+                'div',
+                { className: 'container' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'row' },
+                    favourites.favourites.length > 0 ? favourites.favourites.map(function (movie) {
+                        return _react2.default.createElement(
+                            'div',
+                            { key: movie.imdbID, className: 'card', style: card },
+                            _react2.default.createElement('img', { style: img, className: 'card-img-top', src: movie.Poster, alt: 'Card image cap' }),
+                            _react2.default.createElement(
+                                'span',
+                                null,
+                                _react2.default.createElement(
+                                    'a',
+                                    {
+                                        onClick: function onClick(e) {
+                                            return _this2.handleClick(e, movie);
+                                        },
+                                        href: '#',
+                                        className: 'badge badge-warning' },
+                                    'Marcar como favorito'
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'card-body' },
+                                _react2.default.createElement(
+                                    'h5',
+                                    { className: 'card-title' },
+                                    movie.Title
+                                ),
+                                _react2.default.createElement(
+                                    _reactRouterDom.Link,
+                                    { to: '/movie/' + movie.imdbID },
+                                    _react2.default.createElement(
+                                        'button',
+                                        { className: 'btn btn-primary', id: movie.imdbID },
+                                        'Details'
+                                    )
+                                )
+                            )
+                        );
+                    }) : null
+                )
+            );
+        }
+    }]);
+
+    return Favourites;
+}(_react.Component);
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(Favourites);
 
 /***/ })
 /******/ ]);
