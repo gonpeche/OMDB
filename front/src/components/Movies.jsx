@@ -8,30 +8,36 @@ var img = {
     height: "18rem"
 }
 
-export default (props) => {
-    let handleClick = props.handleClick
+export default ({movies, handleClick}) => {
+    // let handleClick = movies.handleClick
     return (
         <div className="container">
             <div className="row">
                 {
-                    props.movies.length > 0
-                    ?  props.movies.map(function(movie) {
+                    movies.length > 0
+                    ?  movies.map(movie => {
+                        console.log(movies)
                         return (
+
                             <div key={movie.imdbID} className="card" style={card}>
                                 <img style={img} className="card-img-top" src={movie.Poster}  alt="Card image cap"></img>
                                 <div className="card-body">
                                     <h5 className="card-title">{movie.Title}</h5>
+
                                         <Link to={`/movie/${movie.imdbID}`}>
-                                            <button className="btn btn-primary" id={movie.imdbID} onClick={handleClick}> Go somewhere </button>
+                                            <button className="btn btn-primary" 
+                                            id={movie.imdbID} 
+                                            onClick={(e) => handleClick(e,movie)}> Go somewhere 
+                                            </button>
                                         </Link>
                                 </div>
                             </div>
+
                         )
                     })
-                    : null
+                    : <p>EMPTY</p>
                 }
             </div>
         </div>
         )
 }
-

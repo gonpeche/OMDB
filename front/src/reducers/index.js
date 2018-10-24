@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
-import movieReducer from "./movieReducer";
+import moviesReducer from "./moviesReducer";
 
-export default combineReducers({ 
-    movies: moviesReducer
-});
+// export default combineReducers({ 
+//     movies: moviesReducer
+// });
+export default moviesReducer

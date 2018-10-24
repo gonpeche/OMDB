@@ -8,12 +8,11 @@ export default class Main extends Component {
     super(props)
   }
   render() {
-    console.log(this.state)
     return (
       <div>
         <Switch>
-        <Route exact path="/" component={SearchContainer}/> />
-        <Route path="/movie/:id" component={Movie}/> />
+          <Route exact path="/" component={SearchContainer}/> />
+          <Route path="/movie/:id" component={Movie}/> />
         </Switch>
       </div>
     )

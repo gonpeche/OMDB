@@ -15,7 +15,7 @@ export default class Movie extends Component {
         axios.get(`https://www.omdbapi.com/?apikey=20dac387&i=${this.state.movieId}`)
         .then(res => res.data)
         .then(movie => this.setState({
-            selectedMovie:movie
+            selectedMovie: movie
         }))
     }
 

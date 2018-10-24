@@ -3,9 +3,23 @@ import FilterInput from '../components/FilterInput'
 import Movies from '../components/Movies'
 import axios from 'axios'
 
-export default class SearchContainer extends Component {
-    constructor() {
-        super()
+import { connect } from "react-redux";
+import { fetchMovies } from "../actions/index";
+
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchMovies: moviesSearch => dispatch(fetchMovies(moviesSearch))
+    };
+};
+
+const mapStateToProps = (state, ownProps) => {
+    return { movies: state.movies }; // si o si lo q esta en movieReducer
+};
+  
+class SearchContainer extends Component {
+    constructor(props) {
+        super(props)
         this.state = {
             search: [],
             movieID: ""
@@ -13,20 +27,15 @@ export default class SearchContainer extends Component {
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleClick = this.handleClick.bind(this)
     }
-
+    
     handleSubmit(event) {
         event.preventDefault()
         let movie = event.target.movies.value
-        axios.get(`https://www.omdbapi.com/?apikey=20dac387&s=${movie}`)
-        .then(res => res.data)
-        .then(res => {
-            this.setState({
-                search: res['Search']
-            })
-        })
+        this.props.fetchMovies(movie)        
     }
-
-    handleClick(event) {
+    
+    
+    handleClick(event, movie) { // REDUXARLO TAMBIEN
         this.setState({
             movieID: event.target.id
         })
@@ -36,14 +45,19 @@ export default class SearchContainer extends Component {
         return (
             <div >
                 <FilterInput handleSubmit={this.handleSubmit} />
+
                 <Movies 
-                    movies={this.state.search}
+                    movies={this.props.movies}
                     handleClick={this.handleClick}
-                    movieID={this.state.movieID}
+                    // movieID={this.state.movieID}
                 />
             </div>
         )
     }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchContainer);
+
+
 
 

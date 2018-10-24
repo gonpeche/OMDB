@@ -1,10 +1,13 @@
 import { RECEIVE_MOVIES } from "../constants/action-types";
 
-const moviesReducer = (state = [], action) => {
+const initialState = {
+  movies: []
+}
+
+const moviesReducer = (state = initialState, action) => {
   switch (action.type) {
     case RECEIVE_MOVIES:
-    console.log(action)
-      return [...state, action.payload];
+    return Object.assign({}, state, {movies: action.movies})
     default:
       return state;
   }

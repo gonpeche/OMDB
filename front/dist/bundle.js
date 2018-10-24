@@ -3733,9 +3733,9 @@ var _reactRouterDom = __webpack_require__(55);
 
 var _reactRedux = __webpack_require__(81);
 
-var _store = __webpack_require__(105);
+var _index = __webpack_require__(132);
 
-var _store2 = _interopRequireDefault(_store);
+var _index2 = _interopRequireDefault(_index);
 
 var _Main = __webpack_require__(107);
 
@@ -3745,7 +3745,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _reactDom2.default.render(_react2.default.createElement(
     _reactRedux.Provider,
-    { store: _store2.default },
+    { store: _index2.default },
     _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
         null,
@@ -28667,34 +28667,8 @@ function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps, dis
 }
 
 /***/ }),
-/* 105 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _redux = __webpack_require__(30);
-
-var _reducer = __webpack_require__(106);
-
-var _reducer2 = _interopRequireDefault(_reducer);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = (0, _redux.createStore)(_reducer2.default);
-
-/***/ }),
-/* 106 */
-/***/ (function(module, exports) {
-
-"use strict";
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/gonzalo/Desktop/Bootcamp/OMDB/front/src/react-redux/reducer.js'");
-
-/***/ }),
+/* 105 */,
+/* 106 */,
 /* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28741,7 +28715,6 @@ var Main = function (_Component) {
   _createClass(Main, [{
     key: 'render',
     value: function render() {
-      console.log(this.state);
       return _react2.default.createElement(
         'div',
         null,
@@ -28791,6 +28764,10 @@ var _axios = __webpack_require__(111);
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _reactRedux = __webpack_require__(81);
+
+var _index = __webpack_require__(136);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28799,13 +28776,25 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        fetchMovies: function fetchMovies(moviesSearch) {
+            return dispatch((0, _index.fetchMovies)(moviesSearch));
+        }
+    };
+};
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+    return { movies: state.movies }; // si o si lo q esta en movieReducer
+};
+
 var SearchContainer = function (_Component) {
     _inherits(SearchContainer, _Component);
 
-    function SearchContainer() {
+    function SearchContainer(props) {
         _classCallCheck(this, SearchContainer);
 
-        var _this = _possibleConstructorReturn(this, (SearchContainer.__proto__ || Object.getPrototypeOf(SearchContainer)).call(this));
+        var _this = _possibleConstructorReturn(this, (SearchContainer.__proto__ || Object.getPrototypeOf(SearchContainer)).call(this, props));
 
         _this.state = {
             search: [],
@@ -28819,21 +28808,14 @@ var SearchContainer = function (_Component) {
     _createClass(SearchContainer, [{
         key: 'handleSubmit',
         value: function handleSubmit(event) {
-            var _this2 = this;
-
             event.preventDefault();
             var movie = event.target.movies.value;
-            _axios2.default.get('https://www.omdbapi.com/?apikey=20dac387&s=' + movie).then(function (res) {
-                return res.data;
-            }).then(function (res) {
-                _this2.setState({
-                    search: res['Search']
-                });
-            });
+            this.props.fetchMovies(movie);
         }
     }, {
         key: 'handleClick',
-        value: function handleClick(event) {
+        value: function handleClick(event, movie) {
+            // REDUXARLO TAMBIEN
             this.setState({
                 movieID: event.target.id
             });
@@ -28846,9 +28828,9 @@ var SearchContainer = function (_Component) {
                 null,
                 _react2.default.createElement(_FilterInput2.default, { handleSubmit: this.handleSubmit }),
                 _react2.default.createElement(_Movies2.default, {
-                    movies: this.state.search,
-                    handleClick: this.handleClick,
-                    movieID: this.state.movieID
+                    movies: this.props.movies,
+                    handleClick: this.handleClick
+                    // movieID={this.state.movieID}
                 })
             );
         }
@@ -28857,7 +28839,7 @@ var SearchContainer = function (_Component) {
     return SearchContainer;
 }(_react.Component);
 
-exports.default = SearchContainer;
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(SearchContainer);
 
 /***/ }),
 /* 109 */
@@ -28924,15 +28906,19 @@ var img = {
     height: "18rem"
 };
 
-exports.default = function (props) {
-    var handleClick = props.handleClick;
+exports.default = function (_ref) {
+    var movies = _ref.movies,
+        handleClick = _ref.handleClick;
+
+    // let handleClick = movies.handleClick
     return _react2.default.createElement(
         'div',
         { className: 'container' },
         _react2.default.createElement(
             'div',
             { className: 'row' },
-            props.movies.length > 0 ? props.movies.map(function (movie) {
+            movies.length > 0 ? movies.map(function (movie) {
+                console.log(movies);
                 return _react2.default.createElement(
                     'div',
                     { key: movie.imdbID, className: 'card', style: card },
@@ -28950,13 +28936,21 @@ exports.default = function (props) {
                             { to: '/movie/' + movie.imdbID },
                             _react2.default.createElement(
                                 'button',
-                                { className: 'btn btn-primary', id: movie.imdbID, onClick: handleClick },
-                                ' Go somewhere '
+                                { className: 'btn btn-primary',
+                                    id: movie.imdbID,
+                                    onClick: function onClick(e) {
+                                        return handleClick(e, movie);
+                                    } },
+                                ' Go somewhere'
                             )
                         )
                     )
                 );
-            }) : null
+            }) : _react2.default.createElement(
+                'p',
+                null,
+                'EMPTY'
+            )
         )
     );
 };
@@ -30049,6 +30043,174 @@ var Movie = function (_Component) {
 }(_react.Component);
 
 exports.default = Movie;
+
+/***/ }),
+/* 132 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _redux = __webpack_require__(30);
+
+var _reduxThunk = __webpack_require__(137);
+
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+var _index = __webpack_require__(133);
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import { createLogger } from 'redux-logger';
+var composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || _redux.compose; // import { createStore } from "redux";
+// import rootReducer from "../reducers/index";
+// import thunkMiddle
+
+// const store = createStore(
+//   rootReducer
+//   // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+// );
+
+// export default store;
+
+exports.default = (0, _redux.createStore)(_index2.default, composeEnhancers((0, _redux.applyMiddleware)(_reduxThunk2.default)));
+
+/***/ }),
+/* 133 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _redux = __webpack_require__(30);
+
+var _moviesReducer = __webpack_require__(134);
+
+var _moviesReducer2 = _interopRequireDefault(_moviesReducer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// export default combineReducers({ 
+//     movies: moviesReducer
+// });
+exports.default = _moviesReducer2.default;
+
+/***/ }),
+/* 134 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _actionTypes = __webpack_require__(135);
+
+var initialState = {
+  movies: []
+};
+
+var moviesReducer = function moviesReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _actionTypes.RECEIVE_MOVIES:
+      return Object.assign({}, state, { movies: action.movies });
+    default:
+      return state;
+  }
+};
+
+exports.default = moviesReducer;
+
+/***/ }),
+/* 135 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var RECEIVE_MOVIES = exports.RECEIVE_MOVIES = "RECEIVE_MOVIES";
+
+/***/ }),
+/* 136 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.fetchMovies = undefined;
+
+var _axios = __webpack_require__(111);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var receiveMovies = function receiveMovies(movies) {
+  return {
+    type: "RECEIVE_MOVIES",
+    movies: movies
+  };
+};
+
+var fetchMovies = exports.fetchMovies = function fetchMovies(moviesSearch) {
+  return function (dispatch) {
+    _axios2.default.get("https://www.omdbapi.com/?apikey=20dac387&s=" + moviesSearch).then(function (res) {
+      return res.data;
+    })
+    // .then(res => console.log(res))
+    .then(function (movies) {
+      return dispatch(receiveMovies(movies["Search"]));
+    });
+  };
+};
+
+/***/ }),
+/* 137 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+function createThunkMiddleware(extraArgument) {
+  return function (_ref) {
+    var dispatch = _ref.dispatch,
+        getState = _ref.getState;
+    return function (next) {
+      return function (action) {
+        if (typeof action === 'function') {
+          return action(dispatch, getState, extraArgument);
+        }
+
+        return next(action);
+      };
+    };
+  };
+}
+
+var thunk = createThunkMiddleware();
+thunk.withExtraArgument = createThunkMiddleware;
+
+/* harmony default export */ __webpack_exports__["default"] = (thunk);
 
 /***/ })
 /******/ ]);
