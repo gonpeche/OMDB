@@ -28840,24 +28840,60 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = function (props) {
   return _react2.default.createElement(
     "nav",
-    { className: "navbar navbar-light bg-light" },
+    { className: "navbar navbar-expand-lg navbar-light bg-light" },
     _react2.default.createElement(
-      "form",
-      { onSubmit: props.handleSubmit, className: "form-inline" },
+      "a",
+      { className: "navbar-brand", href: "#" },
+      "Home"
+    ),
+    _react2.default.createElement(
+      "button",
+      { className: "navbar-toggler", type: "button", "data-toggle": "collapse", "data-target": "#navbarSupportedContent", "aria-controls": "navbarSupportedContent", "aria-expanded": "false", "aria-label": "Toggle navigation" },
+      _react2.default.createElement("span", { className: "navbar-toggler-icon" })
+    ),
+    _react2.default.createElement(
+      "div",
+      { className: "collapse navbar-collapse", id: "navbarSupportedContent" },
       _react2.default.createElement(
-        "a",
-        { className: "navbar-brand" },
-        "Eleg\xED tu pel\xEDcula"
+        "ul",
+        { className: "navbar-nav mr-auto" },
+        _react2.default.createElement(
+          "li",
+          { className: "nav-item active" },
+          _react2.default.createElement(
+            "a",
+            { className: "nav-link", href: "#" },
+            "Favoritos ",
+            _react2.default.createElement(
+              "span",
+              { className: "sr-only" },
+              "(current)"
+            )
+          )
+        )
       ),
-      _react2.default.createElement("input", { className: "form-control mr-sm-2", name: "movies", type: "text", placeholder: "Search Movies", "aria-label": "Search" }),
       _react2.default.createElement(
-        "button",
-        { className: "btn btn-outline-success my-2 my-sm-0", type: "submit" },
-        "Search"
+        "form",
+        { onSubmit: props.handleSubmit, className: "form-inline my-2 my-lg-0" },
+        _react2.default.createElement("input", { className: "form-control mr-sm-2", name: "movies", type: "search", placeholder: "Search Movie", "aria-label": "Search" }),
+        _react2.default.createElement(
+          "button",
+          { className: "btn btn-outline-success my-2 my-sm-0", type: "submit" },
+          "Search"
+        )
       )
     )
   );
 };
+
+// <nav className="navbar navbar-light bg-light">
+// <form onSubmit={props.handleSubmit} className="form-inline">
+// <a className="navbar-brand">Elegí tu película</a>
+//     <input className="form-control mr-sm-2" name="movies" type="text" placeholder="Search Movies" aria-label="Search"></input>
+//     <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+//     <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Favoritos</button>
+//   </form>
+// </nav>
 
 /***/ }),
 /* 110 */
@@ -28878,6 +28914,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(55);
 
+var _reactRedux = __webpack_require__(81);
+
+var _index = __webpack_require__(136);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28886,8 +28926,20 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var card = { width: "25%" };
+var card = { width: "22%", margin: "1%" };
 var img = { height: "18rem" };
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        setFavourite: function setFavourite(favouriteMovie) {
+            return dispatch((0, _index.setFavourite)(favouriteMovie));
+        }
+    };
+};
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+    return { favourites: state.favourites }; // si o si lo q esta en movieReducer
+};
 
 var Movies = function (_Component) {
     _inherits(Movies, _Component);
@@ -28904,7 +28956,7 @@ var Movies = function (_Component) {
     _createClass(Movies, [{
         key: 'handleClick',
         value: function handleClick(e, movie) {
-            console.log(movie);
+            this.props.setFavourite(movie);
         }
     }, {
         key: 'render',
@@ -28913,6 +28965,7 @@ var Movies = function (_Component) {
 
             var movies = this.props.movies;
 
+            console.log(this.props.movies.favourites);
             return _react2.default.createElement(
                 'div',
                 { className: 'container' },
@@ -28929,9 +28982,12 @@ var Movies = function (_Component) {
                                 null,
                                 _react2.default.createElement(
                                     'a',
-                                    { onClick: function onClick(e) {
+                                    {
+                                        onClick: function onClick(e) {
                                             return _this2.handleClick(e, movie);
-                                        }, href: '#', className: 'badge badge-warning' },
+                                        },
+                                        href: '#',
+                                        className: 'badge badge-warning' },
                                     'Marcar como favorito'
                                 )
                             ),
@@ -28963,7 +29019,7 @@ var Movies = function (_Component) {
     return Movies;
 }(_react.Component);
 
-exports.default = Movies;
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Movies);
 
 /***/ }),
 /* 111 */
@@ -30126,8 +30182,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _actionTypes = __webpack_require__(135);
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 var initialState = {
-  movies: []
+  movies: [],
+  favourites: []
 };
 
 var moviesReducer = function moviesReducer() {
@@ -30135,8 +30194,13 @@ var moviesReducer = function moviesReducer() {
   var action = arguments[1];
 
   switch (action.type) {
+
     case _actionTypes.RECEIVE_MOVIES:
       return Object.assign({}, state, { movies: action.movies });
+
+    case _actionTypes.RECEIVE_FAVOURITES:
+      return Object.assign({}, state, { favourites: [].concat(_toConsumableArray(state.favourites), [action.movies]) });
+
     default:
       return state;
   }
@@ -30155,6 +30219,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var RECEIVE_MOVIES = exports.RECEIVE_MOVIES = "RECEIVE_MOVIES";
+var RECEIVE_FAVOURITES = exports.RECEIVE_FAVOURITES = "RECEIVE_FAVOURITES";
 
 /***/ }),
 /* 136 */
@@ -30166,7 +30231,7 @@ var RECEIVE_MOVIES = exports.RECEIVE_MOVIES = "RECEIVE_MOVIES";
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchMovies = undefined;
+exports.fetchMovies = exports.setFavourite = undefined;
 
 var _axios = __webpack_require__(111);
 
@@ -30177,6 +30242,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var receiveMovies = function receiveMovies(movies) {
   return {
     type: "RECEIVE_MOVIES",
+    movies: movies
+  };
+};
+
+var setFavourite = exports.setFavourite = function setFavourite(movies) {
+  return {
+    type: "RECEIVE_FAVOURITES",
     movies: movies
   };
 };

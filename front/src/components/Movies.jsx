@@ -1,21 +1,34 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from "react-redux";
+import { setFavourite } from '../actions/index'
 
-var card = { width: "25%"}
+var card = { width: "22%", margin: "1%"}
 var img = {height: "18rem"}
 
-export default class Movies extends Component {
+const mapDispatchToProps = dispatch => {
+    return {
+        setFavourite: favouriteMovie => dispatch(setFavourite(favouriteMovie))
+    };
+};
+
+const mapStateToProps = (state, ownProps) => {
+    return { favourites: state.favourites }; // si o si lo q esta en movieReducer
+};
+
+class Movies extends Component {
     constructor(props) {
         super(props)
         this.handleClick = this.handleClick.bind(this)
     }
 
     handleClick(e, movie) {
-        console.log(movie)
+        this.props.setFavourite(movie)
     }
     
     render() {
       const { movies } = this.props
+      console.log(this.props.movies.favourites)
         return (
             <div className="container">
                 <div className="row">
@@ -25,7 +38,14 @@ export default class Movies extends Component {
                             return (
                                 <div key={movie.imdbID} className="card" style={card}>
                                     <img style={img} className="card-img-top" src={movie.Poster}  alt="Card image cap"></img>
-                                    <span><a onClick={(e) => this.handleClick(e, movie)} href="#" className="badge badge-warning">Marcar como favorito</a></span>
+
+                                    <span><a 
+                                    onClick={(e) => this.handleClick(e, movie)} 
+                                    href="#" 
+                                    className="badge badge-warning">Marcar como favorito
+                                    </a></span>
+
+
                                     <div className="card-body">
                                         <h5 className="card-title">{movie.Title}</h5>
                                             <Link to={`/movie/${movie.imdbID}`}>
@@ -42,4 +62,6 @@ export default class Movies extends Component {
         )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Movies);
 
