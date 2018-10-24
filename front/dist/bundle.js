@@ -28787,17 +28787,12 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 var SearchContainer = function (_Component) {
     _inherits(SearchContainer, _Component);
 
-    function SearchContainer(props) {
+    function SearchContainer() {
         _classCallCheck(this, SearchContainer);
 
-        var _this = _possibleConstructorReturn(this, (SearchContainer.__proto__ || Object.getPrototypeOf(SearchContainer)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (SearchContainer.__proto__ || Object.getPrototypeOf(SearchContainer)).call(this));
 
-        _this.state = {
-            search: [],
-            movieID: ""
-        };
         _this.handleSubmit = _this.handleSubmit.bind(_this);
-        // this.handleClick = this.handleClick.bind(this)
         return _this;
     }
 
@@ -28808,13 +28803,6 @@ var SearchContainer = function (_Component) {
             var movie = event.target.movies.value;
             this.props.fetchMovies(movie);
         }
-
-        // handleClick(event, movie) { // REDUXARLO TAMBIEN
-        //     this.setState({
-        //         movieID: event.target.id
-        //     })
-        // }
-
     }, {
         key: 'render',
         value: function render() {
@@ -28822,11 +28810,7 @@ var SearchContainer = function (_Component) {
                 'div',
                 null,
                 _react2.default.createElement(_FilterInput2.default, { handleSubmit: this.handleSubmit }),
-                _react2.default.createElement(_Movies2.default, {
-                    movies: this.props.movies,
-                    handleClick: this.handleClick
-                    // movieID={this.state.movieID}
-                })
+                _react2.default.createElement(_Movies2.default, { movies: this.props.movies, handleClick: this.handleClick })
             );
         }
     }]);
@@ -28886,6 +28870,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
@@ -28894,6 +28880,13 @@ var _reactRouterDom = __webpack_require__(55);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // import React from 'react'
+
+
 var card = {
     width: "25%"
 };
@@ -28901,48 +28894,103 @@ var img = {
     height: "18rem"
 };
 
-exports.default = function (_ref) {
-    var movies = _ref.movies,
-        handleClick = _ref.handleClick;
+var Movies = function (_Component) {
+    _inherits(Movies, _Component);
 
-    return _react2.default.createElement(
-        'div',
-        { className: 'container' },
-        _react2.default.createElement(
-            'div',
-            { className: 'row' },
-            movies.movies.length > 0 ? movies.movies.map(function (movie) {
-                return _react2.default.createElement(
+    function Movies(props) {
+        _classCallCheck(this, Movies);
+
+        return _possibleConstructorReturn(this, (Movies.__proto__ || Object.getPrototypeOf(Movies)).call(this, props));
+    }
+
+    _createClass(Movies, [{
+        key: 'render',
+        value: function render() {
+            var movies = this.props.movies;
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'container' },
+                _react2.default.createElement(
                     'div',
-                    { key: movie.imdbID, className: 'card', style: card },
-                    _react2.default.createElement('img', { style: img, className: 'card-img-top', src: movie.Poster, alt: 'Card image cap' }),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'card-body' },
-                        _react2.default.createElement(
-                            'h5',
-                            { className: 'card-title' },
-                            movie.Title
-                        ),
-                        _react2.default.createElement(
-                            _reactRouterDom.Link,
-                            { to: '/movie/' + movie.imdbID },
+                    { className: 'row' },
+                    movies.movies.length > 0 ? movies.movies.map(function (movie) {
+                        return _react2.default.createElement(
+                            'div',
+                            { key: movie.imdbID, className: 'card', style: card },
+                            _react2.default.createElement('img', { style: img, className: 'card-img-top', src: movie.Poster, alt: 'Card image cap' }),
                             _react2.default.createElement(
-                                'button',
-                                { className: 'btn btn-primary',
-                                    id: movie.imdbID,
-                                    onClick: function onClick(e) {
-                                        return handleClick(e, movie);
-                                    } },
-                                ' Details'
+                                'span',
+                                null,
+                                _react2.default.createElement(
+                                    'a',
+                                    { href: '#', className: 'badge badge-warning' },
+                                    'Marcar como favorito'
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'card-body' },
+                                _react2.default.createElement(
+                                    'h5',
+                                    { className: 'card-title' },
+                                    movie.Title
+                                ),
+                                _react2.default.createElement(
+                                    _reactRouterDom.Link,
+                                    { to: '/movie/' + movie.imdbID },
+                                    _react2.default.createElement(
+                                        'button',
+                                        { className: 'btn btn-primary', id: movie.imdbID },
+                                        'Details'
+                                    )
+                                )
                             )
-                        )
-                    )
-                );
-            }) : null
-        )
-    );
-};
+                        );
+                    }) : null
+                )
+            );
+        }
+    }]);
+
+    return Movies;
+}(_react.Component);
+
+// export default ({movies, handleClick}) => {
+//     return (
+//         <div className="container">
+//             <div className="row">
+//                 {
+//                     movies.movies.length > 0
+//                     ?  movies.movies.map(movie => {
+//                         return (
+
+//                             <div key={movie.imdbID} className="card" style={card}>
+//                                 <img style={img} className="card-img-top" src={movie.Poster}  alt="Card image cap"></img>
+//                                 <span><a href="#" class="badge badge-warning">Marcar como favorito</a></span>
+//                                 <div className="card-body">
+//                                     <h5 className="card-title">{movie.Title}</h5>
+
+//                                         <Link to={`/movie/${movie.imdbID}`}>
+//                                             <button className="btn btn-primary" 
+//                                             id={movie.imdbID} 
+//                                             onClick={(e) => handleClick(e,movie)}> Details 
+//                                             </button>
+//                                         </Link>
+//                                         </div>
+//                             </div>
+
+//                         )
+//                     })
+//                     : null
+//                 }
+//             </div>
+//         </div>
+//         )
+// }
+
+
+exports.default = Movies;
 
 /***/ }),
 /* 111 */

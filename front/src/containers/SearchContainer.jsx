@@ -1,6 +1,5 @@
 import FilterInput from '../components/FilterInput'
 import Movies from '../components/Movies'
-
 import React, { Component } from 'react'
 import { connect } from "react-redux";
 import { fetchMovies } from "../actions/index";
@@ -16,14 +15,9 @@ const mapStateToProps = (state, ownProps) => {
 };
   
 class SearchContainer extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            search: [],
-            movieID: ""
-        }
+    constructor() {
+        super()
         this.handleSubmit = this.handleSubmit.bind(this)
-        // this.handleClick = this.handleClick.bind(this)
     }
     
     handleSubmit(event) {
@@ -31,23 +25,12 @@ class SearchContainer extends Component {
         let movie = event.target.movies.value
         this.props.fetchMovies(movie)        
     }
-    
-    // handleClick(event, movie) { // REDUXARLO TAMBIEN
-    //     this.setState({
-    //         movieID: event.target.id
-    //     })
-    // }
 
     render() {
         return (
-            <div >
+            <div>
                 <FilterInput handleSubmit={this.handleSubmit} />
-
-                <Movies 
-                    movies={this.props.movies}
-                    handleClick={this.handleClick}
-                    // movieID={this.state.movieID}
-                />
+                <Movies movies={this.props.movies} handleClick={this.handleClick}/>
             </div>
         )
     }
