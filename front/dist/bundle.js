@@ -28689,29 +28689,10 @@ exports.default = (0, _redux.createStore)(_reducer2.default);
 
 /***/ }),
 /* 106 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var initialState = {
-  albums: []
-};
-
-exports.default = function () {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-  var action = arguments[1];
-
-  switch (action.type) {
-    case 'RECEIVE_ALBUMS':
-      return Object.assign({}, state, { list: action.albums });
-    default:
-      return state;
-  }
-};
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/gonzalo/Desktop/Bootcamp/OMDB/front/src/react-redux/reducer.js'");
 
 /***/ }),
 /* 107 */
@@ -29977,10 +29958,89 @@ var Movie = function (_Component) {
         value: function render() {
             var selectedMovie = this.state.selectedMovie;
 
+            console.log(selectedMovie);
+            var card = { width: "50%", height: "1rem", marginLeft: "25%" };
+            var span = { fontWeight: "bold" };
             return _react2.default.createElement(
                 'div',
-                null,
-                console.log(selectedMovie)
+                { className: 'container' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'card', style: card },
+                    _react2.default.createElement('img', { className: 'card-img-top', src: selectedMovie.Poster, alt: 'Card image cap' }),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'card-body' },
+                        _react2.default.createElement(
+                            'h5',
+                            { className: 'card-title' },
+                            selectedMovie.Title
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'card-text' },
+                            selectedMovie.Plot
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'ul',
+                        { className: 'list-group list-group-flush' },
+                        _react2.default.createElement(
+                            'li',
+                            { className: 'list-group-item' },
+                            _react2.default.createElement(
+                                'span',
+                                { style: span },
+                                ' Director: '
+                            ),
+                            selectedMovie.Director
+                        ),
+                        _react2.default.createElement(
+                            'li',
+                            { className: 'list-group-item' },
+                            _react2.default.createElement(
+                                'span',
+                                { style: span },
+                                ' G\xE9nero: '
+                            ),
+                            selectedMovie.Genre
+                        ),
+                        _react2.default.createElement(
+                            'li',
+                            { className: 'list-group-item' },
+                            _react2.default.createElement(
+                                'span',
+                                { style: span },
+                                ' Lanzamiento: '
+                            ),
+                            selectedMovie.Released
+                        ),
+                        _react2.default.createElement(
+                            'li',
+                            { className: 'list-group-item' },
+                            _react2.default.createElement(
+                                'span',
+                                { style: span },
+                                ' Rating: '
+                            ),
+                            selectedMovie.imdbRating
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'card-body' },
+                        _react2.default.createElement(
+                            'a',
+                            { href: '#', className: 'card-link' },
+                            'Card link'
+                        ),
+                        _react2.default.createElement(
+                            'a',
+                            { href: '#', className: 'card-link' },
+                            'Another link'
+                        )
+                    )
+                )
             );
         }
     }]);
