@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from "react-redux";
 import { setFavourite } from '../actions/index'
+import axios from 'axios'
 
 var card = { width: "22%", margin: "1%"}
 var img = {height: "18rem"}
@@ -23,8 +24,14 @@ class Movies extends Component {
     }
 
     handleClick(e, movie) {
-        console.log('click: ',movie)
+        console.log('MOVIE: ',movie)
         this.props.setFavourite(movie)
+
+        axios.post('/favourites/new', movie)
+        .then( res => {
+            console.log(res)
+            // console.log(res.data)
+        })
     }
     
     render() {
@@ -39,10 +46,6 @@ class Movies extends Component {
                                 <div key={movie.imdbID} className="card" style={card}>
                                     <img style={img} className="card-img-top" src={movie.Poster}  alt="Card image cap"></img>
 
-                                    {console.log('ID: ',movie.imdbID)}
-                                    {console.log('Favoritos:')}
-
-                                    {}
                                     <span><button 
                                     onClick={(e) => this.handleClick(e, movie)} 
                                     href="#" 

@@ -25,8 +25,12 @@ class Favourites extends Component {
     }
     
     handleClick(e, movie) {
+   
         this.props.setFavourite(movie)
     }
+
+
+
     
     render() {
         const { favourites } = this.props
