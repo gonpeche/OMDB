@@ -17,11 +17,10 @@ export const fetchMovies = (moviesSearch) => (dispatch) => {
   .then(movies => dispatch(receiveMovies(movies["Search"])))    
 }
 
-// export const storeFavourite = (favourite) => (dispatch) => {
-//   axios.post(`/favourites/new`, {favourite})
-//   .then( res => {
-//     console.log(res)
-//     console.log(res.data)
-//   })
+export const storeFavourite = (favourite) => (dispatch) => {
+  console.log('storeFav')
+  axios.post('/favourites/new', favourite)
+  .then( res => res.data)
+  .then( movie => dispatch(setFavourite(movie)))
 
-// }
+}

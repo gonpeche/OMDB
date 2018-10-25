@@ -9,13 +9,6 @@ const mapDispatchToProps = dispatch => {
         fetchMovies: moviesSearch => dispatch(fetchMovies(moviesSearch))
     };
 };
-
-const mapStateToProps = (state, ownProps) => {
-    return { 
-        movies: state.movies,
-        favourites: state.favourites
-    }; // si o si lo q esta en movieReducer
-};
   
 class SearchContainer extends Component {
     constructor() {
@@ -33,14 +26,12 @@ class SearchContainer extends Component {
         return (
             <div>
                 <FilterInput handleSubmit={this.handleSubmit}/>
-                <Movies movies={this.props.movies} handleClick={this.handleClick}/>
+                <Movies/>
             </div>
         )
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchContainer);
-
-
+export default connect(null, mapDispatchToProps)(SearchContainer);
 
 

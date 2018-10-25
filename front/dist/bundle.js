@@ -1920,7 +1920,7 @@ function isPlainObject(value) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchMovies = exports.setFavourite = undefined;
+exports.storeFavourite = exports.fetchMovies = exports.setFavourite = undefined;
 
 var _axios = __webpack_require__(25);
 
@@ -1954,14 +1954,16 @@ var fetchMovies = exports.fetchMovies = function fetchMovies(moviesSearch) {
   };
 };
 
-// export const storeFavourite = (favourite) => (dispatch) => {
-//   axios.post(`/favourites/new`, {favourite})
-//   .then( res => {
-//     console.log(res)
-//     console.log(res.data)
-//   })
-
-// }
+var storeFavourite = exports.storeFavourite = function storeFavourite(favourite) {
+  return function (dispatch) {
+    console.log('storeFav');
+    _axios2.default.post('/favourites/new', favourite).then(function (res) {
+      return res.data;
+    }).then(function (movie) {
+      return dispatch(setFavourite(movie));
+    });
+  };
+};
 
 /***/ }),
 /* 25 */
@@ -28982,13 +28984,6 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     };
 };
 
-var mapStateToProps = function mapStateToProps(state, ownProps) {
-    return {
-        movies: state.movies,
-        favourites: state.favourites
-    }; // si o si lo q esta en movieReducer
-};
-
 var SearchContainer = function (_Component) {
     _inherits(SearchContainer, _Component);
 
@@ -29015,7 +29010,7 @@ var SearchContainer = function (_Component) {
                 'div',
                 null,
                 _react2.default.createElement(_FilterInput2.default, { handleSubmit: this.handleSubmit }),
-                _react2.default.createElement(_Movies2.default, { movies: this.props.movies, handleClick: this.handleClick })
+                _react2.default.createElement(_Movies2.default, null)
             );
         }
     }]);
@@ -29023,7 +29018,7 @@ var SearchContainer = function (_Component) {
     return SearchContainer;
 }(_react.Component);
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(SearchContainer);
+exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(SearchContainer);
 
 /***/ }),
 /* 114 */
@@ -29141,14 +29136,17 @@ var img = { height: "18rem" };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
-        setFavourite: function setFavourite(favouriteMovie) {
-            return dispatch((0, _index.setFavourite)(favouriteMovie));
+        storeFavourite: function storeFavourite(movie) {
+            return dispatch((0, _index.storeFavourite)(movie));
         }
     };
 };
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
-    return { favourites: state.favourites }; // si o si lo q esta en movieReducer
+    return {
+        favourites: state.favourites,
+        movies: state.movies
+    }; // si o si lo q esta en movieReducer
 };
 
 var Movies = function (_Component) {
@@ -29166,19 +29164,14 @@ var Movies = function (_Component) {
     _createClass(Movies, [{
         key: 'handleClick',
         value: function handleClick(e, movie) {
-            console.log('MOVIE: ', movie);
-            this.props.setFavourite(movie);
-
-            _axios2.default.post('/favourites/new', movie).then(function (res) {
-                console.log(res);
-                // console.log(res.data)
-            });
+            this.props.storeFavourite(movie);
         }
     }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
 
+            console.log(this.props);
             var movies = this.props.movies;
 
             return _react2.default.createElement(
@@ -30350,15 +30343,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var card = { width: "22%", margin: "1%" };
-var img = { height: "18rem"
+var img = { height: "18rem" };
 
-    // const mapDispatchToProps = dispatch => {
-    //     return {
-    //         setFavourite: favouriteMovie => dispatch(setFavourite(favouriteMovie))
-    //     };
-    // };
-
-};var mapStateToProps = function mapStateToProps(state, ownProps) {
+var mapStateToProps = function mapStateToProps(state, ownProps) {
     return { favourites: state.movies }; // Por que MOVIES y no FAVOURITES?
 };
 
@@ -30368,27 +30355,14 @@ var Favourites = function (_Component) {
     function Favourites(props) {
         _classCallCheck(this, Favourites);
 
-        var _this = _possibleConstructorReturn(this, (Favourites.__proto__ || Object.getPrototypeOf(Favourites)).call(this, props));
-
-        _this.handleClick = _this.handleClick.bind(_this);
-        return _this;
+        return _possibleConstructorReturn(this, (Favourites.__proto__ || Object.getPrototypeOf(Favourites)).call(this, props));
     }
 
     _createClass(Favourites, [{
-        key: 'handleClick',
-        value: function handleClick(e, movie) {
-
-            this.props.setFavourite(movie);
-        }
-    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
 
-            var favourites = this.props.favourites;
-            // console.log(this.props.favourites)
-
-            console.log(favourites);
             return _react2.default.createElement(
                 'div',
                 { className: 'container' },
@@ -30405,12 +30379,9 @@ var Favourites = function (_Component) {
                                 null,
                                 _react2.default.createElement(
                                     'a',
-                                    {
-                                        onClick: function onClick(e) {
+                                    { onClick: function onClick(e) {
                                             return _this2.handleClick(e, movie);
-                                        },
-                                        href: '#',
-                                        className: 'badge badge-warning' },
+                                        }, href: '#', className: 'badge badge-warning' },
                                     'Marcar como favorito'
                                 )
                             ),

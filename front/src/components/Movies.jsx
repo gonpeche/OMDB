@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from "react-redux";
-import { setFavourite } from '../actions/index'
+import { storeFavourite } from '../actions/index'
 import axios from 'axios'
 
 var card = { width: "22%", margin: "1%"}
@@ -9,12 +9,15 @@ var img = {height: "18rem"}
 
 const mapDispatchToProps = dispatch => {
     return {
-        setFavourite: favouriteMovie => dispatch(setFavourite(favouriteMovie))
+        storeFavourite: movie => dispatch(storeFavourite(movie))
     };
 };
 
 const mapStateToProps = (state, ownProps) => {
-    return { favourites: state.favourites }; // si o si lo q esta en movieReducer
+    return { 
+        favourites: state.favourites,
+        movies: state.movies
+    }; // si o si lo q esta en movieReducer
 };
 
 class Movies extends Component {
@@ -24,17 +27,11 @@ class Movies extends Component {
     }
 
     handleClick(e, movie) {
-        console.log('MOVIE: ',movie)
-        this.props.setFavourite(movie)
-
-        axios.post('/favourites/new', movie)
-        .then( res => {
-            console.log(res)
-            // console.log(res.data)
-        })
+        this.props.storeFavourite(movie)
     }
     
     render() {
+        console.log(this.props)
       const { movies } = this.props
         return (
             <div className="container">
