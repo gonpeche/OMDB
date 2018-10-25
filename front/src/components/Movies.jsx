@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from "react-redux";
 import { storeFavourite } from '../actions/index'
-import axios from 'axios'
 
 var card = { width: "22%", margin: "1%"}
 var img = {height: "18rem"}
@@ -15,7 +14,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = (state, ownProps) => {
     return { 
-        favourites: state.favourites,
+        // favourites: state.favourites,
         movies: state.movies
     }; // si o si lo q esta en movieReducer
 };
@@ -42,15 +41,7 @@ class Movies extends Component {
                             return (
                                 <div key={movie.imdbID} className="card" style={card}>
                                     <img style={img} className="card-img-top" src={movie.Poster}  alt="Card image cap"></img>
-
-                                    <span><button 
-                                    onClick={(e) => this.handleClick(e, movie)} 
-                                    href="#" 
-                                    className="badge badge-warning">Marcar como favorito
-                                    </button></span>
-
-
-
+                                    <span><button onClick={(e) => this.handleClick(e, movie)} href="#" className="badge badge-warning">Marcar como favorito </button></span>
                                     <div className="card-body">
                                         <h5 className="card-title">{movie.Title}</h5>
                                             <Link to={`/movie/${movie.imdbID}`}>

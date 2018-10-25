@@ -5,7 +5,7 @@ const receiveMovies = movies => ({
     movies
 });
 
-export const setFavourite = movies => ({
+const setFavourite = movies => ({
   type: "RECEIVE_FAVOURITES",
   movies
 })

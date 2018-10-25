@@ -1920,7 +1920,7 @@ function isPlainObject(value) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.storeFavourite = exports.fetchMovies = exports.setFavourite = undefined;
+exports.storeFavourite = exports.fetchMovies = undefined;
 
 var _axios = __webpack_require__(25);
 
@@ -1935,7 +1935,7 @@ var receiveMovies = function receiveMovies(movies) {
   };
 };
 
-var setFavourite = exports.setFavourite = function setFavourite(movies) {
+var setFavourite = function setFavourite(movies) {
   return {
     type: "RECEIVE_FAVOURITES",
     movies: movies
@@ -29119,10 +29119,6 @@ var _reactRedux = __webpack_require__(14);
 
 var _index = __webpack_require__(24);
 
-var _axios = __webpack_require__(25);
-
-var _axios2 = _interopRequireDefault(_axios);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29144,7 +29140,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
     return {
-        favourites: state.favourites,
+        // favourites: state.favourites,
         movies: state.movies
     }; // si o si lo q esta en movieReducer
 };
@@ -29190,13 +29186,10 @@ var Movies = function (_Component) {
                                 null,
                                 _react2.default.createElement(
                                     'button',
-                                    {
-                                        onClick: function onClick(e) {
+                                    { onClick: function onClick(e) {
                                             return _this2.handleClick(e, movie);
-                                        },
-                                        href: '#',
-                                        className: 'badge badge-warning' },
-                                    'Marcar como favorito'
+                                        }, href: '#', className: 'badge badge-warning' },
+                                    'Marcar como favorito '
                                 )
                             ),
                             _react2.default.createElement(
@@ -30332,7 +30325,9 @@ var _reactRouterDom = __webpack_require__(9);
 
 var _reactRedux = __webpack_require__(14);
 
-var _index = __webpack_require__(24);
+var _axios = __webpack_require__(25);
+
+var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30346,8 +30341,12 @@ var card = { width: "22%", margin: "1%" };
 var img = { height: "18rem" };
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
-    return { favourites: state.movies }; // Por que MOVIES y no FAVOURITES?
+    return {
+        favourites: state.movies
+    };
 };
+
+console.log('bam');
 
 var Favourites = function (_Component) {
     _inherits(Favourites, _Component);
@@ -30355,13 +30354,35 @@ var Favourites = function (_Component) {
     function Favourites(props) {
         _classCallCheck(this, Favourites);
 
-        return _possibleConstructorReturn(this, (Favourites.__proto__ || Object.getPrototypeOf(Favourites)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Favourites.__proto__ || Object.getPrototypeOf(Favourites)).call(this, props));
+
+        _this.state = {
+            listaFavoritos: []
+        };
+        return _this;
     }
 
     _createClass(Favourites, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            console.log('entre');
+            _axios2.default.get('/favourites/find').then(function (res) {
+                return res.data;
+            }).then(function (favoritos) {
+                _this2.setState({
+                    listaFavoritos: favoritos
+                });
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
+
+            var favourites = this.props.favourites;
+            var listaFavoritos = this.state.listaFavoritos;
 
             return _react2.default.createElement(
                 'div',
@@ -30369,7 +30390,26 @@ var Favourites = function (_Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'row' },
-                    favourites.favourites.length > 0 ? favourites.favourites.map(function (movie) {
+
+                    // favourites.favourites.length > 0
+                    // ?  favourites.favourites.map(movie => {
+                    //     return (
+                    //         <div key={movie.imdbID} className="card" style={card}>
+                    //             <img style={img} className="card-img-top" src={movie.Poster}  alt="Card image cap"></img>
+
+                    //             <span><a onClick={(e) => this.handleClick(e, movie)} href="#" className="badge badge-warning">Marcar como favorito</a></span>
+
+                    //             <div className="card-body">
+                    //                 <h5 className="card-title">{movie.Title}</h5>
+                    //                     <Link to={`/movie/${movie.imdbID}`}>
+                    //                         <button className="btn btn-primary" id={movie.imdbID}>Details</button>
+                    //                     </Link>
+                    //             </div>
+                    //         </div>
+                    //     )
+                    // })
+                    // : null
+                    listaFavoritos.length > 0 ? listaFavoritos.map(function (movie) {
                         return _react2.default.createElement(
                             'div',
                             { key: movie.imdbID, className: 'card', style: card },
@@ -30380,7 +30420,7 @@ var Favourites = function (_Component) {
                                 _react2.default.createElement(
                                     'a',
                                     { onClick: function onClick(e) {
-                                            return _this2.handleClick(e, movie);
+                                            return _this3.handleClick(e, movie);
                                         }, href: '#', className: 'badge badge-warning' },
                                     'Marcar como favorito'
                                 )

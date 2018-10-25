@@ -36,8 +36,17 @@ app.post('/favourites/new', function(req,res) {
     });
 })
 
-// app.get('/favourites', function(req,res) {
-//     Favourite.find()
-// })
+app.get('/favourites/find', function(req,res) {
+    // console.log('back!')
+    Favourite.find({}, function (err, favoritos) {
+        if (err) return console.log(err);
+        res.json(favoritos)
+    });
+    // Favourite.find()
+    // .then(res => console.log(res.data))
+    // .then(res => res.data)
+    // .then( favoritos => res.json(favoritos))
+})
+
 
 app.listen(3000, function() {console.log('Listening port 3000')})
