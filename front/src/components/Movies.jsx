@@ -40,6 +40,9 @@ class Movies extends Component {
                                     <img style={img} className="card-img-top" src={movie.Poster}  alt="Card image cap"></img>
 
                                     {console.log('ID: ',movie.imdbID)}
+                                    {console.log('Favoritos:')}
+
+                                    {}
                                     <span><button 
                                     onClick={(e) => this.handleClick(e, movie)} 
                                     href="#" 

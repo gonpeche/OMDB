@@ -28988,6 +28988,7 @@ var Movies = function (_Component) {
                             { key: movie.imdbID, className: 'card', style: card },
                             _react2.default.createElement('img', { style: img, className: 'card-img-top', src: movie.Poster, alt: 'Card image cap' }),
                             console.log('ID: ', movie.imdbID),
+                            console.log('Favoritos:'),
                             _react2.default.createElement(
                                 'span',
                                 null,

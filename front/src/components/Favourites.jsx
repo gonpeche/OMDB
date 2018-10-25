@@ -47,7 +47,7 @@ class Favourites extends Component {
                                 href="#" 
                                 className="badge badge-warning">Marcar como favorito
                                 </a></span>
-
+                            
 
                                 <div className="card-body">
                                     <h5 className="card-title">{movie.Title}</h5>
