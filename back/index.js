@@ -1,5 +1,7 @@
 let express = require('express')
 let app = express()
+const mongoose = require('mongoose')
+mongoose.connect("mongodb://localhost/omdb")
 
 app.use(express.static('../front/dist'))
 

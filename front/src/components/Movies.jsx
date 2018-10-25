@@ -23,12 +23,12 @@ class Movies extends Component {
     }
 
     handleClick(e, movie) {
+        console.log('click: ',movie)
         this.props.setFavourite(movie)
     }
     
     render() {
       const { movies } = this.props
-      console.log(this.props.movies.favourites)
         return (
             <div className="container">
                 <div className="row">
@@ -39,11 +39,13 @@ class Movies extends Component {
                                 <div key={movie.imdbID} className="card" style={card}>
                                     <img style={img} className="card-img-top" src={movie.Poster}  alt="Card image cap"></img>
 
-                                    <span><a 
+                                    {console.log('ID: ',movie.imdbID)}
+                                    <span><button 
                                     onClick={(e) => this.handleClick(e, movie)} 
                                     href="#" 
                                     className="badge badge-warning">Marcar como favorito
-                                    </a></span>
+                                    </button></span>
+
 
 
                                     <div className="card-body">

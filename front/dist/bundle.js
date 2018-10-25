@@ -28966,6 +28966,7 @@ var Movies = function (_Component) {
     _createClass(Movies, [{
         key: 'handleClick',
         value: function handleClick(e, movie) {
+            console.log('click: ', movie);
             this.props.setFavourite(movie);
         }
     }, {
@@ -28975,7 +28976,6 @@ var Movies = function (_Component) {
 
             var movies = this.props.movies;
 
-            console.log(this.props.movies.favourites);
             return _react2.default.createElement(
                 'div',
                 { className: 'container' },
@@ -28987,11 +28987,12 @@ var Movies = function (_Component) {
                             'div',
                             { key: movie.imdbID, className: 'card', style: card },
                             _react2.default.createElement('img', { style: img, className: 'card-img-top', src: movie.Poster, alt: 'Card image cap' }),
+                            console.log('ID: ', movie.imdbID),
                             _react2.default.createElement(
                                 'span',
                                 null,
                                 _react2.default.createElement(
-                                    'a',
+                                    'button',
                                     {
                                         onClick: function onClick(e) {
                                             return _this2.handleClick(e, movie);
